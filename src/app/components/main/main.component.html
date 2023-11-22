@@ -1,0 +1,54 @@
+<button (click)="openModal(false)">Add New Person</button>
+
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Phone</th>
+      <th>Birth Date</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let person of persons">
+      <td>{{ person.name }}</td>
+      <td>{{ person.email }}</td>
+      <td>{{ person.phone }}</td>
+      <td>{{ person.birthDate | date }}</td>
+      <td>
+
+        <button (click)="openModal(true, person)">Edit</button>
+        <button (click)="deletePerson(person.id)">Delete</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+
+<div class="modal" [class.show]="modalOpen">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title">{{ isEditMode ? 'Edit Person' : 'Add Person' }}</h5>
+      <button type="button" class="close" (click)="closeModal()">&times;</button>
+    </div>
+    <div class="modal-body">
+      <form [formGroup]="personForm" (ngSubmit)="submitForm()">
+        <label for="name">Name:</label>
+        <input type="text" id="name" formControlName="name">
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" formControlName="email">
+
+        <label for="phone">Phone:</label>
+        <input type="text" id="phone" formControlName="phone">
+
+        <label for="birthDate">Birth Date:</label>
+        <input type="date" id="birthDate" formControlName="birthDate">
+
+        <button type="submit">{{ isEditMode ? 'Update' : 'Create' }}</button>
+      </form>
+    </div>
+  </div>
+</div>
