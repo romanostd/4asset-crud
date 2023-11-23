@@ -1,27 +1,49 @@
-# 4assetChallenge
+# Angular CRUD Application
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.3.11.
+This project is an Angular-based web application designed for managing user data. It features a complete CRUD (Create, Read, Update, Delete) functionality and is styled using TailwindCSS. The application interacts with an external API to perform data operations.
 
-## Development server
+## Description
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+This Angular application provides a user-friendly interface for managing a list of users. It allows users to create new entries, view a list of existing users, edit their details, and delete them as needed. The project utilizes TailwindCSS for styling, ensuring a responsive and modern design.
 
-## Code scaffolding
+## Getting Started
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+### Dependencies
 
-## Build
+- Node.js
+- Angular CLI
+- TailwindCSS
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+### Installing
 
-## Running unit tests
+1. Clone the repository:
+    ```bash
+    git clone https://github.com/your-username/your-repo-name.git](https://github.com/romanostd/4assetChallenge.git)
+    ```
+2. Navigate to the project directory:
+    ```bash
+    cd 4assetChallenge
+    ```
+3. Install the dependencies:
+    ```bash
+    npm install
+    ```
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+### Running the Application
 
-## Running end-to-end tests
+1. Start the Angular development server:
+    ```bash
+    ng serve
+    ```
+2. Open `http://localhost:4200/` in your browser.
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+## Features
 
-## Further help
+- **User Management**: Perform Create, Read, Update, and Delete operations on user data.
+- **Responsive Design**: Styled with TailwindCSS for a responsive and modern user interface.
+- **External API Integration**: Connects to an external API for data operations.
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+## Acknowledgments
+
+- Thanks 4asset for providing the APIs and Screens used in this project.
+
