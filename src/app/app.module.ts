@@ -8,13 +8,17 @@ import { MainComponent } from './components/main/main.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DateFormatPipe } from './pipes/date-format.pipe';
+import { CreateUpdateComponent } from './components/create-update/create-update.component';
+import { AppModalComponent } from './components/app-modal/app-modal.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     MainComponent,
-    DateFormatPipe
+    DateFormatPipe,
+    CreateUpdateComponent,
+    AppModalComponent
   ],
   imports: [
     BrowserModule,

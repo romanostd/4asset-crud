@@ -1,95 +1,85 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Person } from 'src/app/models/data.model';
 import { DataService } from 'src/app/services/data.service';
-
-interface Person {
-  id: number;
-  name: string;
-  email: string;
-  phone: string;
-  birthDate: string; 
-}
-
-interface ApiResponse {
-  count: number;
-  limit: number;
-  page: number;
-  results: Person[]; 
-}
+import { ModalService } from 'src/app/services/modal.service';
 
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
-  styleUrls: ['./main.component.scss']
+  styleUrls: ['./main.component.scss'],
 })
 export class MainComponent implements OnInit {
-  persons: any[] = [];
-  personForm: FormGroup;
-  isEditMode: boolean = false;
+  persons: Person[] = [];
   modalOpen: boolean = false;
-  currentEditingId: number | null = null;
+  currentEditingPerson?: Person | null = null;
 
-  constructor(private dataService: DataService, private fb: FormBuilder) {
-    this.personForm = this.fb.group({
-      name: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      phone: ['', Validators.required],
-      birthDate: ['', Validators.required]
-    });
-  }
+  constructor(
+    private dataService: DataService,
+    private modalService: ModalService
+  ) {}
 
   ngOnInit(): void {
     this.retrievePersons();
   }
 
   retrievePersons(): void {
-    this.dataService.getPersons().subscribe((data: any) => {
-      this.persons = data.results;
+    this.dataService.getPersons().subscribe((response: any) => {
+      this.persons = response.results;
     });
   }
 
-  openModal(edit: boolean, person?: any): void {
+  openModal(edit: boolean, person?: Person): void {
     this.modalOpen = true;
-    this.isEditMode = edit;
-
-    if (edit && person) {
-      this.currentEditingId = person.id;
-
-
-      const formattedBirthDate = person.birthDate ?
-        new Date(person.birthDate).toISOString().split('T')[0] : '';
-
-
-      this.personForm.patchValue({
-        ...person,
-        birthDate: formattedBirthDate
-      });
-    } else {
-      this.currentEditingId = null;
-      this.personForm.reset();
-    }
+    this.currentEditingPerson = edit ? person : null;
   }
-
 
   closeModal(): void {
     this.modalOpen = false;
+    this.currentEditingPerson = null;
   }
 
-  submitForm(): void {
-    if (this.isEditMode && this.currentEditingId != null) {
-      this.dataService.updatePerson(this.currentEditingId, this.personForm.value).subscribe(() => {
-        this.retrievePersons();
-      });
+  handleSubmit(personData: Person): void {
+    if (this.currentEditingPerson) {
+      this.dataService
+        .updatePerson(this.currentEditingPerson.id, personData)
+        .subscribe(() => {
+          this.modalService.openModal({
+            message: 'Cadastro editado com sucesso!',
+            confirmText: 'Fechar',
+          });
+          this.retrievePersons();
+          this.closeModal();
+        });
     } else {
-      this.dataService.createPerson(this.personForm.value).subscribe(() => {
+      this.dataService.createPerson(personData).subscribe(() => {
+        this.modalService.openModal({
+          message: 'Cadastro criado com sucesso!',
+          confirmText: 'Fechar',
+        });
         this.retrievePersons();
+        this.closeModal();
       });
     }
-    this.closeModal();
+  }
+
+  confirmDelete(personId: number): void {
+    this.modalService.openModal({
+      message: 'Excluir cadastro',
+      subMessage:
+        'O cadastro será excluído definitivamente. Você tem certeza que deseja continuar?',
+      confirmText: 'Excluir',
+      cancelText: 'Cancelar',
+      onConfirm: () => this.deletePerson(personId),
+      onCancel: () => this.modalService.closeModal(),
+    });
   }
 
   deletePerson(personId: number): void {
     this.dataService.deletePerson(personId).subscribe(() => {
+      this.modalService.openModal({
+        message: 'Cadastro excluído com sucesso!',
+        confirmText: 'Fechar',
+      });
       this.retrievePersons();
     });
   }

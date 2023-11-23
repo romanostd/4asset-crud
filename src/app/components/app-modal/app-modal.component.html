@@ -1,0 +1,45 @@
+<div *ngIf="config" class="modal p4">
+  <div class="modal-content text-3xl">
+    <div
+      class="flex items-center justify-end cursor-pointer mb-4"
+      (click)="cancel()"
+    >
+      <img src="../../../assets/Path.svg" />
+    </div>
+    <div *ngIf="config.cancelText">
+      <div class="modal-body">
+        <p>{{ config.message }}</p>
+        <p class="text-sm text-gray-600 py-2">{{ config.subMessage }}</p>
+      </div>
+      <div class="modal-actions mt-4 flex justify-end">
+        <button
+          class="cursor-pointer text-sm text-gray-600 flex items-center"
+          (click)="cancel()"
+        >
+          <img
+            src="../../../assets/trash-light2.svg"
+            alt="Cancel"
+            class="mr-2"
+          />
+          {{ config.cancelText }}
+        </button>
+        <button
+          class="forms-button text-white w-40 ml-4 flex items-center justify-center gap-2"
+          (click)="confirm()"
+        >
+          {{ config.confirmText }}
+        </button>
+      </div>
+    </div>
+    <div *ngIf="!config.cancelText">
+      <div class="modal-body">
+        <p>{{ config.message }}</p>
+      </div>
+      <div class="modal-actions mt-4 flex">
+        <button class="forms-button w-32" (click)="confirm()">
+          {{ config.confirmText }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -45,6 +45,28 @@ html {
   padding-bottom: 40px;
 }
 
+.buttons-font {
+  font-family: Open sans !important;
+}
+
+.forms-button {
+  border-radius: 6.25rem;
+  background: $color-black;
+  height: 52px;
+  padding: 9px 20px;
+  gap: 32px;
+  font-size: 1rem;
+}
+
+.forms-button {
+  @apply bg-black text-white rounded-full py-2 px-4;
+  position: relative;
+  overflow: hidden;
+  &:disabled {
+    @apply bg-gray-500;
+  }
+}
+
 .outlined-button {
   border-radius: 100px;
   border: 1px solid #fff;
@@ -53,11 +75,9 @@ html {
   padding: 9px 20px;
   gap: 32px;
   font-size: 1rem;
-  font-family: Open sans !important;
 }
 
 .outlined-button:hover {
   border: none;
   background: $color-purple;
-
 }

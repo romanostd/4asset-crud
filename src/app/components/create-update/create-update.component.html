@@ -1,0 +1,100 @@
+<div
+  class="modal fixed w-full h-full top-0 left-0 flex items-center justify-center"
+  [class.hidden]="!modalOpen"
+>
+  <div
+    class="modal-overlay absolute w-full h-full bg-gray-900 opacity-50"
+    (click)="closeModal()"
+  ></div>
+  <div
+    class="modal-container bg-white w-11/12 md:max-w-md mx-auto rounded shadow-lg z-50 overflow-y-auto"
+  >
+    <div
+      class="flex items-center justify-end mr-3 mt-3 cursor-pointer"
+      (click)="closeModal()"
+    >
+      <img src="../../../assets/Path.svg" />
+    </div>
+
+    <div class="modal-content py-4 text-left px-6 py-6">
+      <div class="flex justify-between items-center pb-5">
+        <p class="text-2xl font-bold">
+          {{ person ? "Editar cadastro" : "Criar novo cadastro" }}
+        </p>
+      </div>
+      <form [formGroup]="personForm" (ngSubmit)="submitForm()">
+        <div class="mb-4">
+          <label for="name" class="block text-gray-600 text-sm font-bold mb-2"
+            >Nome:</label
+          >
+          <input
+            type="text"
+            id="name"
+            formControlName="name"
+            placeholder="Insira o nome"
+            class="bg-gray-200 outline-none appearance-none w-full py-2 px-3 text-grey-darker"
+          />
+        </div>
+        <div class="mb-4">
+          <label for="email" class="block text-gray-600 text-sm font-bold mb-2"
+            >E-mail:</label
+          >
+          <input
+            type="email"
+            id="email"
+            formControlName="email"
+            placeholder="Insira o email"
+            class="bg-gray-200 outline-none appearance-none w-full py-2 px-3 text-grey-darker"
+          />
+        </div>
+        <div class="mb-4">
+          <label for="phone" class="block text-gray-600 text-sm font-bold mb-2"
+            >Telefone:</label
+          >
+          <input
+            type="text"
+            (input)="formatPhone()"
+            id="phone"
+            formControlName="phone"
+            placeholder="Insira o telefone"
+            class="bg-gray-200 outline-none appearance-none w-full py-2 px-3 text-grey-darker"
+          />
+        </div>
+        <div class="mb-4">
+          <label
+            for="birthDate"
+            class="block text-gray-600 text-sm font-bold mb-2"
+            >Data de Nascimento:</label
+          >
+          <input
+            type="date"
+            id="birthDate"
+            formControlName="birthDate"
+            placeholder="Insira a data de nascimento"
+            class="bg-gray-200 outline-none appearance-none w-full py-2 px-3 text-grey-darker"
+          />
+        </div>
+        <div class="flex justify-center">
+          <button
+            type="submit"
+            class="forms-button flex items-center justify-center text-white w-96 relative"
+            [disabled]="!personForm.valid"
+          >
+            {{ person ? "Salvar alterações" : "Novo cadastro" }}
+            <img
+              src="../../../assets/Vector.svg"
+              alt="Arrow"
+              class="absolute right-10"
+            />
+          </button>
+        </div>
+        <div
+          class="text-gray-600 text-center flex items-center justify-center mt-4 cursor-pointer"
+          (click)="closeModal()"
+        >
+          Cancelar
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
