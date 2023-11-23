@@ -1,21 +1,63 @@
-body,
-html {
-  margin: 0;
-  min-height: 100%;
-  position: relative;
-  min-width: 350px;
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+@import "fonts";
+
+$color-green: #eaf4bf;
+$color-gray-light: #bfbfbf;
+$color-gray: #f1f6f5;
+$color-gray-dark: #dee3e2;
+$color-black: #131e23;
+$color-purple: #3c38ff;
+
+body {
+  font-family: "JetBrains Mono", monospace;
+}
+
+.text-color {
+  color: $color-black;
+}
+
+.background-black {
+  background-color: $color-black;
+}
+
+.asset-font {
+  color: #fff;
+  font-family: JetBrains Mono;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: 131%;
 }
 
 body,
 html {
   margin: 0;
   padding-top: 60px;
-  padding-bottom: 40px;
   min-height: 100%;
   position: relative;
+  background-image: url("../src/assets/background.png");
 }
 
 .content-wrapper {
   padding-top: 60px;
   padding-bottom: 40px;
+}
+
+.outlined-button {
+  border-radius: 100px;
+  border: 1px solid #fff;
+  background: rgba(19, 30, 35, 0);
+  height: 52px;
+  padding: 9px 20px;
+  gap: 32px;
+  font-size: 1rem;
+  font-family: Open sans !important;
+}
+
+.outlined-button:hover {
+  border: none;
+  background: $color-purple;
+
 }

@@ -1,54 +1,156 @@
-<button (click)="openModal(false)">Add New Person</button>
-
-
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Email</th>
-      <th>Phone</th>
-      <th>Birth Date</th>
-      <th>Actions</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let person of persons">
-      <td>{{ person.name }}</td>
-      <td>{{ person.email }}</td>
-      <td>{{ person.phone }}</td>
-      <td>{{ person.birthDate | date }}</td>
-      <td>
-
-        <button (click)="openModal(true, person)">Edit</button>
-        <button (click)="deletePerson(person.id)">Delete</button>
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-
-<div class="modal" [class.show]="modalOpen">
-  <div class="modal-content">
-    <div class="modal-header">
-      <h5 class="modal-title">{{ isEditMode ? 'Edit Person' : 'Add Person' }}</h5>
-      <button type="button" class="close" (click)="closeModal()">&times;</button>
+<div
+  class="min-h-screen bg-cover bg-center"
+  style="background-image: url('/assets/background.png')"
+>
+  <div class="container mx-auto py-12 px-0">
+    <div class="flex justify-between items-center py-6">
+      <h2 class="text-3xl font-semibold text-white">Cadastro de pessoas</h2>
+      <button class="outlined-button flex items-center justify-between text-white" (click)="openModal(false)">
+        Novo cadastro
+        <img src="../../../assets/small-vector.svg" alt="Arrow" class="ml-0"> 
+      </button>
     </div>
-    <div class="modal-body">
-      <form [formGroup]="personForm" (ngSubmit)="submitForm()">
-        <label for="name">Name:</label>
-        <input type="text" id="name" formControlName="name">
 
-        <label for="email">Email:</label>
-        <input type="email" id="email" formControlName="email">
+    <div class="bg-white shadow-lg overflow-hidden">
+      <table class="table-auto w-full asset-table">
+        <thead>
+          <tr class="background-black asset-font">
+            <th class="text-left px-4 py-2">Nome</th>
+            <th class="text-left px-4 py-2">E-mail</th>
+            <th class="text-left px-4 py-2">Telefone</th>
+            <th class="text-left px-4 py-2">Data de nascimento</th>
+            <th class="px-4 py-2 "></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let person of persons" class="border-b">
+            <td class="px-4 py-2">{{ person.name }}</td>
+            <td class="px-4 py-2">{{ person.email }}</td>
+            <td class="px-4 py-2">{{ person.phone }}</td>
+            <td class="px-4 py-2">{{ person.birthDate | dateFormat }}</td>
+            <td class="px-4 py-2 flex justify-center gap-2">
+              <button
+                class="font-bold p-2 rounded"
+                (click)="openModal(true, person)"
+              >
+                <img
+                  src="../../../assets/edit-light.svg"
+                  alt="Edit"
+                  class="h-8 w-8"
+                />
+              </button>
+              <button
+                class="font-bold p-2 rounded"
+                (click)="deletePerson(person.id)"
+              >
+                <img
+                  src="../../../assets/trash-light.svg"
+                  alt="Delete"
+                  class="h-8 w-8"
+                />
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
 
-        <label for="phone">Phone:</label>
-        <input type="text" id="phone" formControlName="phone">
+<div
+  class="modal fixed w-full h-full top-0 left-0 flex items-center justify-center"
+  [class.hidden]="!modalOpen"
+>
+  <div
+    class="modal-overlay absolute w-full h-full bg-gray-900 opacity-50"
+  ></div>
 
-        <label for="birthDate">Birth Date:</label>
-        <input type="date" id="birthDate" formControlName="birthDate">
-
-        <button type="submit">{{ isEditMode ? 'Update' : 'Create' }}</button>
-      </form>
+  <div
+    class="modal-container bg-white w-11/12 md:max-w-md mx-auto rounded shadow-lg z-50 overflow-y-auto"
+  >
+    <div class="modal-content py-4 text-left px-6">
+      <div class="flex justify-between items-center pb-3">
+        <p class="text-2xl font-bold">
+          {{ isEditMode ? "Edit Person" : "Add Person" }}
+        </p>
+        <div class="modal-close cursor-pointer z-50" (click)="closeModal()">
+          <svg
+            class="fill-current text-black"
+            xmlns="http://www.w3.org/2000/svg"
+            width="18"
+            height="18"
+            viewBox="0 0 18 18"
+          >
+            <path
+              d="M12.41 6.09L11.3 5 9 7.3 6.7 5 5.59 6.09 7.89 8.4 5.59 10.71 6.7 11.8 9 9.5l2.3 2.3 1.11-1.09L10.11 8.4z"
+            />
+          </svg>
+        </div>
+      </div>
+      <div class="my-5">
+        <form [formGroup]="personForm" (ngSubmit)="submitForm()">
+          <div class="mb-4">
+            <label
+              for="name"
+              class="block text-grey-darker text-sm font-bold mb-2"
+              >Name:</label
+            >
+            <input
+              type="text"
+              id="name"
+              formControlName="name"
+              class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker"
+            />
+          </div>
+          <div class="mb-4">
+            <label
+              for="email"
+              class="block text-grey-darker text-sm font-bold mb-2"
+              >Email:</label
+            >
+            <input
+              type="email"
+              id="email"
+              formControlName="email"
+              class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker"
+            />
+          </div>
+          <div class="mb-4">
+            <label
+              for="phone"
+              class="block text-grey-darker text-sm font-bold mb-2"
+              >Phone:</label
+            >
+            <input
+              type="text"
+              id="phone"
+              formControlName="phone"
+              class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker"
+            />
+          </div>
+          <div class="mb-4">
+            <label
+              for="birthDate"
+              class="block text-grey-darker text-sm font-bold mb-2"
+              >Birth Date:</label
+            >
+            <input
+              type="date"
+              id="birthDate"
+              formControlName="birthDate"
+              class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker"
+            />
+          </div>
+          <div class="flex justify-end">
+            <button
+              type="submit"
+              class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+            >
+              {{ isEditMode ? "Update" : "Create" }}
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
 </div>
